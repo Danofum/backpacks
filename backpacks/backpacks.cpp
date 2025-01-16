@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include <vector>
 #include <algorithm>
+#include <functional>
 
 using namespace std;
 
@@ -23,23 +24,26 @@ int main()
 	items = intCheck(items);
 
 	vector<int> weight;
+	int totalWeight = 0;
 
 	for (int i = 0; i < items; i++) {
 		cout << "Введите вес " << i + 1 << " вещи" << endl;
 		cin >> value;
 		value = intCheck(value);
 		weight.push_back(value);
+		totalWeight += weight[i];
 	}
 	sort(weight.begin(), weight.end());
 
+	int halfWeight = totalWeight / 2;
 	int firstBag = 0, secondBag = 0;
 
 	for (int i = weight.size() - 1; i >= 0; i--) {
-		if (firstBag > secondBag || firstBag == secondBag) {
-			secondBag += weight[i];
+		if (firstBag + weight[i] <= halfWeight) {
+			firstBag += weight[i];
 		}
 		else {
-			firstBag += weight[i];
+			secondBag += weight[i];
 		}
 	}
 	cout << "Вес первого рюкзака: " << firstBag << endl << "Вес второго рюкзака: " << secondBag;
